@@ -1,17 +1,49 @@
 
+var sourceData = "./data/dataMeat2.csv";
+
+
+//function to load unique values for a dropdown menu
+function carregarValoresDropdown(sourceData, colName, id) {
+  d3.csv(sourceData).then(function(dados) {
+      // Extrair valores únicos da primeira coluna (assumindo que é a coluna desejada)
+      var valoresUnicos = Array.from(new Set(dados.map(function(d) { return d[colName]; })));
+
+      // Preencher as opções do dropdown com base nos valores únicos
+      var dropdown = d3.select('#'+ id);
+      dropdown.selectAll("option")
+          .data(valoresUnicos)
+          .enter().append("option")
+          .attr("value", function(d) { return d; })
+          .text(function(d) { return d; });
+  }).catch(function(error) {
+      console.error("Erro ao carregar o arquivo CSV:", error);
+  });
+}
+
+
+carregarValoresDropdown(sourceData, "SUBJECT", "locationDropdown1");
+
+//mapa
+function filtrarMapa(){
+var subjectValor  = document.getElementById('locationDropdown1').value;
 d3.csv("./data/dataMeat2.csv").then(function(dados) {
-    meatKg = dados.filter(d => d.MEASURE === "KG_CAP" && d.TIME==="2023" && d.SUBJECT === "BEEF");
+    meatKg = dados.filter(d => d.MEASURE === "KG_CAP" && d.TIME==="2023" && d.SUBJECT === subjectValor);
     var worldData = meatKg.map(function(d) {
         return {
           name: d.name,
           value: parseFloat(d.Value).toFixed(2)
         };
-
-       
     });
+    
+    if (subjectValor == 'BEEF') {
+      var vMax = 30;
+    } else if(subjectValor == 'POULTRY') {
+      var vMax = 60;
+    } 
+    else
+    var vMax = 20;
 
-    console.log(worldData);
-    var myChart = echarts.init(document.getElementById('chartWorld'),'dark');
+    var myChart = echarts.init(document.getElementById('chartWorld'));
     var option;
     myChart.showLoading();
 
@@ -27,10 +59,10 @@ d3.csv("./data/dataMeat2.csv").then(function(dados) {
               text: 'Kilograms of meat per capita consumed by country in 2023',
             },
             
-            aspectScale: 0.8, // Ajusta a escala para melhor exibição
+            aspectScale: 1, // Ajusta a escala para melhor exibição
             tooltip: {
               trigger: 'item',
-              formatter: '{c}( Kg per capita)'
+              formatter: '{b} - {c} (Kg per capita)'
             },
    
             series: [
@@ -38,6 +70,7 @@ d3.csv("./data/dataMeat2.csv").then(function(dados) {
                 type: 'map',
                 map: 'world',
                 roam: true,
+                zoom: 2,
                 data: worldData,
                 //nameProperty: 'ISO_A3',       
                 itemStyle: {
@@ -62,12 +95,13 @@ d3.csv("./data/dataMeat2.csv").then(function(dados) {
 
             visualMap: {
               min: 0,
-              max: 10,
+              max: vMax,
               text: ['High', 'Low'],
-            },
               inRange: {
-                color: ['#121122', 'rgba(3,4,5,0.4)', 'red'],
-                symbolSize: [30, 100]
+                color: ['light blue', '#db0000']
+            },
+              
+              
           },
   
             emphasis: {
@@ -76,28 +110,13 @@ d3.csv("./data/dataMeat2.csv").then(function(dados) {
                 show: true
               },
             },
-
-          })
-
-          
+          })  
         );
-
   })
 option && myChart.setOption(option);
 });
+}
     
-    
-
- 
-
-
-
-
-
-
-// Agora você pode usar a variável meatKg fora da função.
-// Certifique-se de que a lógica dependente de meatKg está fora do bloco de promessa, 
-// pois a leitura do arquivo é assíncrona.
 
 
 
