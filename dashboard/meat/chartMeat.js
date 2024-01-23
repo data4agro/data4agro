@@ -1,7 +1,7 @@
 
 var sourceData = "./data/dataMeat2.csv";
 
-
+/*
 //function to load unique values for a dropdown menu
 function carregarValoresDropdown(sourceData, colName, id) {
   d3.csv(sourceData).then(function(dados) {
@@ -19,9 +19,9 @@ function carregarValoresDropdown(sourceData, colName, id) {
       console.error("Erro ao carregar o arquivo CSV:", error);
   });
 }
-
-
 carregarValoresDropdown(sourceData, "SUBJECT", "locationDropdown1");
+
+*/
 
 //mapa
 function filtrarMapa(){
