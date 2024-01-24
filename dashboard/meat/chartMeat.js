@@ -1,4 +1,5 @@
 var sourceData = "./data/dataMeat2.csv";
+filtrarMapa();
 
 
 function filtrarMapa() {
@@ -14,6 +15,8 @@ function filtrarMapa() {
     processarDados(filtrarMapa.dadosCache, subjectValor);
   }
 }
+
+
 
 function processarDados(dados, subjectValor) {
   meatKg = dados.filter(d => d.MEASURE === "KG_CAP" && d.TIME === "2023" && d.SUBJECT === subjectValor);
@@ -47,9 +50,7 @@ function processarDados(dados, subjectValor) {
         myChart.setOption(
       
           (option = {
-            title: {
-              text: 'Kilograms of meat per capita consumed by country in 2023',
-            },
+            
             
             aspectScale: 1, // Ajusta a escala para melhor exibição
             tooltip: {
@@ -62,7 +63,7 @@ function processarDados(dados, subjectValor) {
                 type: 'map',
                 map: 'world',
                 roam: true,
-                zoom: 2,
+                zoom: 2.3,
                 data: worldData,
                 //nameProperty: 'ISO_A3',       
                 itemStyle: {

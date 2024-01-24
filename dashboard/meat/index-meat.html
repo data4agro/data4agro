@@ -28,7 +28,8 @@
   </div>
   </div>
   <div class="w3-bar-block">
-    <a href="./index-meat.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><i class="fa fa-home fa-fw w3-margin-right"></i>Home</a> 
+    <a href="../../index.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><i class="fa fa-home fa-fw w3-margin-right"></i>Home</a> 
+    <a href="./index-meat.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><i class="fa fa-globe fa-fw w3-margin-right"></i>World</a>
     <a href="./top.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><i class="fa fa-trophy fa-fw w3-margin-right"></i>Top 10</a> 
     <a href="./profile.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><i class="fa fa-flag fa-fw w3-margin-right"></i>Country profile</a> 
     <a href="./comparison.html" onclick="w3_close()" class="w3-bar-item w3-button w3-hover-white"><i class="fa fa-times fa-fw w3-margin-right"></i>Country comparison</a> 
@@ -64,18 +65,11 @@
       Compared to other commodities, meat is characterised by high production costs and high output prices. Meat demand is associated with higher incomes and
       a shift - due to urbanisation - to food consumption changes that favour increased proteins from animal sources in diets.
     </p>
-    <p>
-      While the global meat industry
-      provides food and a livelihood for billions of people, it also has significant environmental and health consequences for the planet.<p>
-      Meat consumption is measured in thousand tonnes of carcass weight (except for poultryexpressed as ready to cook weight) and in kilograms of retail weight per capita.
-      Carcass weight to retail weight conversion factors are: 0.7
-      for beef and veal, 0.78 for pigmeat, and 0.88 for both sheep meat and poultry meat.
-    </p>
   </div>
 
   <!-- Selector -->
   <div class="w3-container w3-margin-bottom ">    
-    <select class="input w3-black w3-large w3-left-align" id="locationDropdown1" onchange="filtrarMapa()">
+    <select class="input w3-large w3-left-align" style="width: 200px;" id="locationDropdown1" onchange="filtrarMapa()">
       <option value="BEEF" selected>Beef</option>
       <option value="PIG">Pig</option>
       <option value="POULTRY">Poutry</option>
@@ -84,12 +78,58 @@
   </div>
 
     <!-- World chart --> 
-   <div class="w3-container"  id="chartWorld" style="width: 100%;height:500px;">
+   <div class="w3-container">
+    <h2 class="w3-xlarge title">Kilograms per capita consumed by country in 2023</h2>
+    <h3 class="w3-large subtitle">Data from OECD</h3>
+
    </div>
-  <!-- End page content -->
+   <div class="w3-container"  id="chartWorld" style="width: 100%;height:600px;">
+   </div>
+  
 
   <hr style="border:5px solid rgb(231, 41, 72)" class="w3-round w3-margin-top-32">
+
+   <div class="w3-container">
+    <p>
+      While the global meat industry
+      provides food and a livelihood for billions of people, it also has significant environmental and health consequences for the planet.
+    <p>
+      Meat consumption is measured in thousand tonnes of carcass weight (except for poultryexpressed as ready to cook weight) and in kilograms of retail weight per capita.
+      Carcass weight to retail weight conversion factors are: 0.7
+      for beef and veal, 0.78 for pigmeat, and 0.88 for both sheep meat and poultry meat.
+    </p>
+
+   </div>
+
+  <!-- Follow us -->
+  <div class="w3-margin">
+      <div class="w3-container w3-padding w3-right">
+        <h4>Follow Us</h4>
+        <div class="w3-container w3-xxlarge w3-padding">
+          <i class="fa fa-instagram w3-hover-opacity"></i>
+          <i class="fa fa-pinterest-p w3-hover-opacity"></i>
+        </div>
+      </div>
+    <hr>
+  </div>
+
+    <!-- Advertise -->
+  <div class="w3-margin">
+    <div class="w3-container w3-padding">
+      <h4>Advertise</h4>
+    </div>
+    <div class="w3-container w3-display-container w3-white w3-border" style="height:200px">
+      <span class="w3-display-middle">Your AD Here</span>
+    </div>
+  </div>
+ <!-- End page content -->
+
+
 </div>
+
+
+
+
 
 
 
