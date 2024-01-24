@@ -63,7 +63,7 @@ function processarDados(dados, subjectValor) {
                 type: 'map',
                 map: 'world',
                 roam: true,
-                zoom: 2.3,
+                zoom: 3,
                 data: worldData,
                 //nameProperty: 'ISO_A3',       
                 itemStyle: {
@@ -82,10 +82,7 @@ function processarDados(dados, subjectValor) {
               orient: 'vertical',
               left: 'right',
               top: 'top',
-              feature: {
-                restore: {},
-                saveAsImage: {}
-              }
+              
             },
 
             visualMap: {
@@ -110,7 +107,9 @@ function processarDados(dados, subjectValor) {
   })
 
   // ...
-
+  window.addEventListener('resize', function() {
+    myChart.resize();
+    });
   // Chame myChart.setOption() apenas uma vez no final para melhorar o desempenho
   option && myChart.setOption(option);
 }
