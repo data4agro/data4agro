@@ -75,6 +75,8 @@ function processarDados(dados, subjectValor) {
               },
             ],
 
+          
+
             toolbox: {
               show: true,
               orient: 'vertical',
