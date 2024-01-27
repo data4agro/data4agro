@@ -12,22 +12,20 @@
 <script src="./echarts.min.js"></script>
 <title>Meat Consumption</title>
 </head>
-
-<body class="w3-light-grey" onload="filter4Map();">
+<body class="w3-light-grey">
 
   <!-- Top container -->
   <div class="w3-bar w3-top w3-theme-red w3-large" style="z-index:4">
     <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" onclick="w3_open();"><i class="fa fa-bars"></i></button>
-    <span class="w3-bar-item w3-left">Meat Consumption</span>
-    <span class="w3-bar-item w3-right">Data4Agro</span>
+    <span class="w3-bar-item w3-right">Meat Consumption - Data4Agro</span>
   </div>
 
   <!-- Sidebar/menu -->
   <nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="z-index:3;width:300px;" id="mySidebar"><br>
     <div class="w3-container">
-      
+      <h5>Menu</h5>
     </div>
-  
+    </div>
     <div class="w3-bar-block">
       <a href="../../index.html" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw" onclick="w3_close()"></i>Home</a>
       <a href="./index-meat.html" class="w3-bar-item w3-button w3-padding" ><i class="fa fa-globe fa-fw" onclick="w3_close()"></i>World</a>
@@ -42,53 +40,53 @@
   <!-- Overlay effect when opening sidebar on small screens -->
   <div class="w3-overlay w3-hide-large w3-animate-opacity" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
-
   <!-- !PAGE CONTENT! -->
   <div class="w3-main" style="margin-left:300px;margin-top:43px;">
-
     <!-- !internal box! -->
-
-      <div class="w3-container w3-white internal-box">
-        <!-- Title -->
-        <h1 class="w3-xxlarge"><b>Meat consumption</b></h1>
-        <p>
-          Meat consumption is related to living standards, diet, livestock production and consumer prices, as well as macroeconomic uncertainty and shocks to GDP.
-        </p>
-        <p>
-          Compared to other commodities, meat is characterised by high production costs and high output prices. Meat demand is associated with higher incomes and
-          a shift - due to urbanisation - to food consumption changes that favour increased proteins from animal sources in diets.
-        </p>
-        <p>
-          While the global meat industry
-          provides food and a livelihood for billions of people, it also has significant environmental and health consequences for the planet.
-        </p>
-      </div>
-
-      <!-- World chart --> 
-      <div class="w3-container w3-white internal-box w3-margin-top">
-        <h2 class="w3-xlarge title">Kilograms per capita consumed by country in 2023</h2>
-        <h3 class="w3-large subtitle">Data from OECD</h3>
-        <div class="w3-row">
+    <div class="w3-container w3-white internal-box">
+      <!-- Title -->
+      <h1 class="w3-xxlarge"><b>Meat consumption</b></h1>
+      <!-- Top 10 chart --> 
+      <h2 class="w3-xlarge title">Country comparison</h2>
+      <h3 class="w3-large subtitle">Data from OECD</h3>
+        <div class="w3-row w3-container">
           <div class="w3-col l6">
-              <select class="w3-select w3-margin-bottom selector" onchange="filter4Map()" id="subjectMap">
-                  <option value="BEEF" selected>Beef</option>
-                  <option value="POULTRY">Poultry</option>
-                  <option value="PIG">Pig</option>
-                  <option value="SHEEP">Sheep</option>
-                </select>
+            <select class="w3-select w3-margin-bottom selector" onchange="filterComparison()" id="subjectDropdown2">
+              <option value="BEEF" selected>Beef</option>
+              <option value="POULTRY">Poultry</option>
+              <option value="PIG">Pig</option>
+              <option value="SHEEP">Sheep</option>
+            </select>
           </div>
-          <div class="w3-col l6" id="chartMap" style="width: 100%; height: 600px;"></div>
         </div>
-      </div>
-    </div>
+        <div class="w3-row w3-container">
+          <div class="w3-col l6">
+              <select class="w3-select w3-margin-bottom selector" onchange="filterComparison()" id="locationDropdown2">           
+                <option value="none" selected>Select country</option>
+                <option value="AUS">Australia</option>
+                <option value="CAN">Canada</option>
+                <option value="JPN">Japan</option>
+                <option value="KOR">Korea, Republic of</option>
+              </select>
+          </div>
+            <div class="w3-col l6">
+              <select class="w3-select w3-margin-bottom selector" onchange="filterComparison()" id="locationDropdown3">           
+                <option value="none" selected>Select country</option>
+                <option value="AUS">Australia</option>
+                <option value="CAN">Canada</option>
+                <option value="JPN">Japan</option>
+                <option value="KOR">Korea, Republic of</option>
+              </select>
+          </div>
+          <div class="w3-row">
+            <div class="w3-col">
+              <div class="chart" id="chartComparison" style="width: 100%; height: 600px;"></div>
+            </div>
 
+  
 
-    <!-- Footer -->
-    <footer class="w3-container w3-padding-16 w3-light-grey w3-right">
-      <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" target="_blank">w3.css</a></p>
-    </footer>
-  <!-- End page content -->
-  </div>
+  
+    
 
   <script src="index.js"></script>
 
