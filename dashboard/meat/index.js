@@ -56,7 +56,9 @@ function filter4Top10() {
           var chartDom = document.getElementById('chartTop');
           var myChart = echarts.init(chartDom);
           var option; 
+          
           option = {
+          
             yAxis: {
               type: 'category',
               data: top10.map(item => item.LOCATION),
@@ -69,6 +71,11 @@ function filter4Top10() {
             },
             tooltip: {
               trigger: 'item',
+              formatter: function(params) {
+                var tooltipText = top10[params.dataIndex].NAME+ '<br/>'+ params.value + ' kg per capita' +'<br/>';
+                return tooltipText;
+              }
+
 
             },
             series: [
@@ -77,6 +84,7 @@ function filter4Top10() {
                 type: 'bar',
                 showBackground: true,
                 color:'#860000',
+                
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)'
                 },
@@ -102,6 +110,10 @@ function filter4Top10() {
             },
             tooltip: {
               trigger: 'item',
+              formatter: function(params) {
+                var tooltipText = less10[params.dataIndex].NAME+ '<br/>'+ params.value + ' kg per capita' +'<br/>';
+                return tooltipText;
+              }
             },
             series: [
               {
@@ -109,6 +121,7 @@ function filter4Top10() {
                 type: 'bar',
                 showBackground: true,
                 color:'#ADD8E6',
+                
                 itemStyle:{
                   borderRadius: [0, 25,25, 0]
                 },
