@@ -13,7 +13,7 @@
 <title>Meat Consumption</title>
 </head>
 
-<body class="w3-light-grey" onload="filter4Map();">
+<body class="w3-light-grey" onload="filter4Top10();">
 
   <!-- Top container -->
   <div class="w3-bar w3-top w3-theme-red w3-large" style="z-index:4">
@@ -30,8 +30,7 @@
   
     <div class="w3-bar-block">
       <a href="../../index.html" class="w3-bar-item w3-button w3-padding"><i class="fa fa-home fa-fw" onclick="w3_close()"></i>Home</a>
-      <a href="./index-meat.html" class="w3-bar-item w3-button w3-padding" ><i class="fa fa-globe fa-fw" onclick="w3_close()"></i>World</a>
-      <a href="./top.html" class="w3-bar-item w3-button w3-padding"><i class="fa fa-trophy fa-fw" onclick="w3_close()"></i>  Top 10</a>
+      <a href="./index-meat.html" class="w3-bar-item w3-button w3-padding" ><i class="fa fa-trophy fa-fw" onclick="w3_close()"></i>Top 10</a>
       <a href="./country_profile.html" class="w3-bar-item w3-button w3-padding" onclick="w3_close()"><i class="fa fa-flag fa-fw"></i>Country profile</a>
       <a href="./country_comparison.html" class="w3-bar-item w3-button w3-padding"><i class="fa fa-times fa-fw" onclick="w3_close()"></i>Country comparison</a>
       <a href="./calculator.html" class="w3-bar-item w3-button w3-padding"><i class="fa fa-calculator fa-fw" onclick="w3_close()"></i>Steak calculator</a>
@@ -47,39 +46,35 @@
   <div class="w3-main" style="margin-left:300px;margin-top:43px;">
 
     <!-- !internal box! -->
-
-      <div class="w3-container w3-white internal-box">
-        <!-- Title -->
-        <h1 class="w3-xxlarge"><b>Meat consumption</b></h1>
-        <p>
-          Meat consumption is related to living standards, diet, livestock production and consumer prices, as well as macroeconomic uncertainty and shocks to GDP.
-        </p>
-        <p>
-          Compared to other commodities, meat is characterised by high production costs and high output prices. Meat demand is associated with higher incomes and
-          a shift - due to urbanisation - to food consumption changes that favour increased proteins from animal sources in diets.
-        </p>
-        <p>
-          While the global meat industry
-          provides food and a livelihood for billions of people, it also has significant environmental and health consequences for the planet.
-        </p>
-      </div>
-
-      <!-- World chart --> 
-      <div class="w3-container w3-white internal-box w3-margin-top">
-        <h2 class="w3-xlarge title">Kilograms per capita consumed by country in 2023</h2>
-        <h3 class="w3-large subtitle">Data from OECD</h3>
-        <div class="w3-row">
+    <div class="w3-container w3-white internal-box">
+      <!-- Title -->
+      <h1 class="w3-xlarge"><b>Meat consumption</b></h1>
+      <!-- Top 10 chart -->
+      <p>
+      Meat consumption is related to living standards, diet, livestock production and consumer prices, as well as macroeconomic uncertainty and shocks to GDP.
+      </p>
+      <h2 class="w3-large title">Ranking of meat consumers in 2023</h2>
+      <h3 class="w3-medium subtitle">Data from OECD</h3>
+        <div class="w3-row w3-container">
           <div class="w3-col l6">
-              <select class="w3-select w3-margin-bottom selector" onchange="filter4Map()" id="subjectMap">
+              <select class="w3-select w3-margin-bottom selector" onchange="filter4Top10()" id="locationTop10Chart">
                   <option value="BEEF" selected>Beef</option>
                   <option value="POULTRY">Poultry</option>
                   <option value="PIG">Pig</option>
                   <option value="SHEEP">Sheep</option>
-                </select>
+              </select>
           </div>
-          <div class="w3-col l6" id="chartMap" style="width: 100%; height: 600px;"></div>
-        </div>
-      </div>
+          <div class="w3-row">
+            <div class="w3-col l6">
+              <h2 class="w3-xlarge title w3-center">Top 10</h2>
+              <div class="chart" id="chartTop" style="width: 100%; height: 600px;"></div>
+            </div>
+            <div class="w3-col l6">
+              <h2 class="w3-xlarge title w3-center">Bottom 10</h2>
+              <div class="chart" id="chartLess" style="width: 100%; height: 600px;"></div>
+            </div>
+          </div>
+        </div> 
     </div>
 
 
@@ -89,7 +84,7 @@
     </footer>
   <!-- End page content -->
   </div>
-
+  
   <script src="index.js"></script>
 
 </body>

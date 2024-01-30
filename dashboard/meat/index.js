@@ -35,92 +35,6 @@ function updateValue() {
   output.innerHTML = slider.value;
 }
 
-//Mapa
-function filter4Map() {
-    // Cache de dados para evitar leitura do arquivo CSV a cada chamada
-    var subjectValor = document.getElementById('subjectMap').value;
-    d3.csv("dataMeat2.csv").then(function (dados) {
-      meatKg =
-      dados.filter(d => d.MEASURE === "KG_CAP" && d.TIME === "2023" && d.SUBJECT === subjectValor)
-      .map(function (d) {
-        return {
-          name: d.name,
-          value: parseFloat(d.Value).toFixed(2)
-        };
-      });
-    console.log(meatKg);
-  });
-
-  if (subjectValor == 'BEEF') {
-    var vMax = 30;
-  } else if(subjectValor == 'POULTRY') {
-    var vMax = 60;
-  } 
-  else
-  var vMax = 20;
-
-  
-  var myChart = echarts.init(document.getElementById('chartMap'));
-      var option;
-      myChart.showLoading();
-  
-      fetch('world.json')
-      .then(response => response.json())
-      .then(geoJson => {
-          myChart.hideLoading();
-          echarts.registerMap('world', geoJson);
-          myChart.setOption(
-
-
-
-            (option = {
-              aspectScale: 1, // Ajusta a escala para melhor exibição
-              tooltip: {
-                trigger: 'item',
-                formatter: '{b} - {c} (Kg per capita)'
-              },
-              series: [
-                {
-                  type: 'map',
-                  map: 'world',
-                  roam: true,
-                  zoom: 3,
-                  data: meatKg,
-                  nameProperty: 'name',       
-                  itemStyle: {
-                    areaColor: 'gray',  // Cor de fundo
-                    borderColor: 'white', // Cor da borda
-                    borderWidth: 1.1,  // Largura da borda
-                  },
-                },
-              ],
-              toolbox: {
-                show: true,
-                orient: 'vertical',
-                left: 'right',
-                top: 'top',
-                
-              },
-              visualMap: {
-                min: 0,
-                max: vMax,
-                text: ['High', 'Low'],
-                inRange: {
-                  color: ['light blue', '#db0000']
-              },   
-            },
-              emphasis: {
-                focus: 'self',
-                label: {
-                  show: true
-                },
-              },
-            })  
-          );
-    })
-    option && myChart.setOption(option);
-
-}
 
 //Top and Bottom
 function filter4Top10() {
@@ -129,35 +43,45 @@ function filter4Top10() {
       // Filtrar os dados
       var top10 = dados
           .filter(d => d.MEASURE === "KG_CAP" && d.TIME === "2023" && d.SUBJECT === subjectValor2)
-          .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat(d.Value).toFixed(2) }))
+          .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat(d.Value).toFixed(2), NAME:d.name  }))
           .sort((a, b) => b.Value - a.Value)
           .slice(0, 10);
 
       var less10 = dados
           .filter(d => d.MEASURE === "KG_CAP" && d.TIME === "2023" && d.SUBJECT === subjectValor2)
-          .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat(d.Value).toFixed(2) }))
+          .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat(d.Value).toFixed(2), NAME:d.name }))
           .sort((b, a) => b.Value - a.Value)
           .slice(0, 10);
-
+      console.log(top10);
           var chartDom = document.getElementById('chartTop');
           var myChart = echarts.init(chartDom);
           var option; 
           option = {
-            xAxis: {
-              type: 'category',
-              data: top10.map(d => d.LOCATION)
-            },
             yAxis: {
+              type: 'category',
+              data: top10.map(item => item.LOCATION),
+              inverse: true,
+
+
+            },
+            xAxis: {
               type: 'value'
+            },
+            tooltip: {
+              trigger: 'item',
+
             },
             series: [
               {
-                data: top10.map(d => d.Value),
+                data: top10.map(item => item.Value),
                 type: 'bar',
                 showBackground: true,
                 color:'#860000',
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)'
+                },
+                itemStyle:{
+                  borderRadius: [0, 25,25, 0]
                 }
               }
             ]
@@ -168,19 +92,26 @@ function filter4Top10() {
           var myChart = echarts.init(chartDom);
           var option; 
           option = {
-            xAxis: {
-              type: 'category',
-              data: less10.map(d => d.LOCATION)
-            },
             yAxis: {
+              type: 'category',
+              data: less10.map(item => item.LOCATION),
+              inverse: true
+            },
+            xAxis: {
               type: 'value'
+            },
+            tooltip: {
+              trigger: 'item',
             },
             series: [
               {
-                data: less10.map(d => d.Value),
+                data: less10.map(item => item.Value),
                 type: 'bar',
                 showBackground: true,
                 color:'#ADD8E6',
+                itemStyle:{
+                  borderRadius: [0, 25,25, 0]
+                },
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)'
                 }
@@ -191,7 +122,9 @@ function filter4Top10() {
           option && myChart.setOption(option);   
   });
 }
-  
+
+
+
 //Profile
 function filterProfile(){
   var locationValor = document.getElementById('locationDropdown1').value;
@@ -292,3 +225,51 @@ function filterComparison(){
 }
   
 //Calculator
+function calculator(){
+  var nMeat = (document.getElementById('sliderValue').value)*0.17;
+  var subjectValor3 = document.getElementById('subjectDropdown3').value;
+  var you = {LOCATION:"You",Value:nMeat};
+  d3.csv('dataMeat2.csv').then(function(dados) {
+    var steakCalculator = dados
+        .filter(d => d.MEASURE === "KG_CAP" && d.TIME === "2023" && d.SUBJECT === subjectValor3)
+        .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat((d.Value)/52).toFixed(2)}))
+
+    steakCalculator.push(you)
+    
+    steakCalculator.sort((a, b) => b.Value - a.Value)
+    console.log(steakCalculator);
+
+
+
+    var chartDom = document.getElementById('chartCalculator');
+          var myChart = echarts.init(chartDom);
+          var option; 
+          option = {
+            xAxis: {
+              type: 'category',
+              data: steakCalculator.map(d => d.LOCATION)
+            },
+            yAxis: {
+              type: 'value'
+            },
+            series: [
+              {
+                data: steakCalculator.map(d => d.Value),
+                type: 'bar',
+                showBackground: true,
+                color:'#860000',
+                backgroundStyle: {
+                  color: 'rgba(180, 180, 180, 0.2)'
+                }
+              }
+            ]
+          };
+          option && myChart.setOption(option);
+
+    
+  
+
+  })
+
+}
+  
