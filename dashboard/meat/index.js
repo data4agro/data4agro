@@ -52,7 +52,7 @@ function filter4Top10() {
           .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat(d.Value).toFixed(2), NAME:d.name }))
           .sort((b, a) => b.Value - a.Value)
           .slice(0, 10);
-      console.log(top10);
+  
           var chartDom = document.getElementById('chartTop');
           var myChart = echarts.init(chartDom);
           var option; 
@@ -67,7 +67,8 @@ function filter4Top10() {
 
             },
             xAxis: {
-              type: 'value'
+              type: 'value',
+              show:false,
             },
             tooltip: {
               trigger: 'item',
@@ -80,19 +81,27 @@ function filter4Top10() {
             },
             series: [
               {
-                data: top10.map(item => item.Value),
+                data: top10.map(item => ({
+                  value: parseFloat(item.Value),
+                  itemStyle: {
+                    color: parseFloat(item.Value) === Math.max(...top10.map(item => parseFloat(item.Value))) ? '#860000' : ' #edbbbb',
+                    borderRadius: [0, 25, 25, 0]
+                  }
+                })),
                 type: 'bar',
                 showBackground: true,
-                color:'#860000',
-                
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)'
                 },
-                itemStyle:{
-                  borderRadius: [0, 25,25, 0]
-                }
-              }
+                
+              },
+              
+              
+
+              
+              
             ]
+          
           };
           option && myChart.setOption(option);
 
@@ -106,7 +115,8 @@ function filter4Top10() {
               inverse: true
             },
             xAxis: {
-              type: 'value'
+              type: 'value',
+              show:false,
             },
             tooltip: {
               trigger: 'item',
@@ -117,35 +127,35 @@ function filter4Top10() {
             },
             series: [
               {
-                data: less10.map(item => item.Value),
+                data: less10.map(item => ({
+                  value: parseFloat(item.Value),
+                  itemStyle: {
+                    color: parseFloat(item.Value) === Math.min(...less10.map(item => parseFloat(item.Value))) ? '  #548caa ' : '#c3d9e5',
+                    borderRadius: [0, 25, 25, 0]
+                  }
+                })),
                 type: 'bar',
                 showBackground: true,
-                color:'#ADD8E6',
-                
-                itemStyle:{
-                  borderRadius: [0, 25,25, 0]
-                },
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)'
                 }
               }
             ]
+          
           };
           
           option && myChart.setOption(option);   
   });
 }
 
-
-
 //Profile
 function filterProfile(){
   var locationValor = document.getElementById('locationDropdown1').value;
   d3.csv('dataMeat2.csv').then(function(dados) {
     var profile = dados
-    .filter(d => d.MEASURE === "KG_CAP" && d.LOCATION === locationValor)
+    .filter(d => d.MEASURE === "KG_CAP" && d.LOCATION === locationValor &&d.TIME >='1991')
     .map(d => ({ name: d.name, Value: parseFloat(d.Value).toFixed(2), SUBJECT:d.SUBJECT, TIME:d.TIME}))
-    
+    console.log(profile);
     
     var beef = profile
     .filter(d=>d.SUBJECT=='BEEF')
@@ -165,29 +175,59 @@ function filterProfile(){
   var myChart = echarts.init(chartDom);
   myChart.setOption(
     option={
+      emphasis: {
+        focus: 'series'
+      },
+
+      legend: {
+        show: true
+      },
+      
       xAxis: {
         type: 'category',
         data: beef.map(d=>d.TIME)
       },
       yAxis:{
-        type: 'value'
+        type: 'value',
+
       },
-      series:[
+      tooltip: {
+        trigger: 'axis',
+        showContent: true,
+        order: 'valueDesc',
+        
+      },
+
+      series:
+      [
         {
           data: beef.map(d=> d.Value),
-          type: 'line'
+          type: 'line',
+          name: 'Beef',
+          color:'#860000',
+          showSymbol: false,
+
         },
         {
           data: poultry.map(d=> d.Value),
-          type: 'line', 
+          type: 'line',
+          name: 'Poultry',
+          color: '#f5ae09',
+          showSymbol: false, 
         },
         {
           data: pig.map(d=> d.Value),
           type: 'line', 
+          name:'Pig',
+          color:'#ffa9a9',
+          showSymbol: false,
         },
         {
           data: sheep.map(d=> d.Value),
           type: 'line', 
+          name: 'Sheep',
+          color: '#67a0ec',
+          showSymbol: false,
         }
       ]
 
