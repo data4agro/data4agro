@@ -254,6 +254,9 @@ function filterComparison(){
     var myChart = echarts.init(chartDom);
     myChart.setOption(
       option={
+        legend: {
+          show: true
+        },
         xAxis: {
           type: 'category',
           data: country1.map(d=>d.TIME)
@@ -261,14 +264,24 @@ function filterComparison(){
         yAxis:{
           type: 'value'
         },
+        tooltip: {
+          trigger: 'axis',
+          showContent: true,
+          order: 'valueDesc', 
+        },
         series:[
           {
             data: country1.map(d=> d.Value),
-            type: 'line'
+            name: locationValor2,
+            type: 'line',
+            showSymbol: false,
           },
           {
             data: country2.map(d=> d.Value),
+            name: locationValor3,
             type: 'line', 
+            showSymbol: false,
+            color: '#f5ae09',
           },
 
         ]
@@ -307,10 +320,15 @@ function calculator(){
             },
             series: [
               {
-                data: steakCalculator.map(d => d.Value),
+                data: steakCalculator.map(item => ({
+                  value: parseFloat(item.Value),
+                  itemStyle: {
+                    color: parseFloat(item.LOCATION) === 'You' ? '  #548caa ' : '#c3d9e5',
+                    borderRadius: [0, 25, 25, 0]
+                  }
+                })),
                 type: 'bar',
                 showBackground: true,
-                color:'#860000',
                 backgroundStyle: {
                   color: 'rgba(180, 180, 180, 0.2)'
                 }
@@ -318,9 +336,6 @@ function calculator(){
             ]
           };
           option && myChart.setOption(option);
-
-    
-  
 
   })
 
