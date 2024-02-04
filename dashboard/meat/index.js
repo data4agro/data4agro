@@ -85,23 +85,13 @@ function filter4Top10() {
                   value: parseFloat(item.Value),
                   itemStyle: {
                     color: parseFloat(item.Value) === Math.max(...top10.map(item => parseFloat(item.Value))) ? '#860000' : ' #edbbbb',
-                    borderRadius: [0, 25, 25, 0]
+                    borderRadius: [0, 5, 5, 0],
                   }
                 })),
                 type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                  color: 'rgba(180, 180, 180, 0.2)'
-                },
-                
+                barWidth: '50%'
               },
-              
-              
-
-              
-              
-            ]
-          
+            ]       
           };
           option && myChart.setOption(option);
 
@@ -131,14 +121,12 @@ function filter4Top10() {
                   value: parseFloat(item.Value),
                   itemStyle: {
                     color: parseFloat(item.Value) === Math.min(...less10.map(item => parseFloat(item.Value))) ? '  #548caa ' : '#c3d9e5',
-                    borderRadius: [0, 25, 25, 0]
+                    borderRadius: [0, 5, 5, 0]
                   }
                 })),
                 type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                  color: 'rgba(180, 180, 180, 0.2)'
-                }
+                barWidth: '50%'
+                
               }
             ]
           
@@ -275,6 +263,7 @@ function filterComparison(){
             name: locationValor2,
             type: 'line',
             showSymbol: false,
+            color:'#860000',
           },
           {
             data: country2.map(d=> d.Value),
@@ -294,15 +283,15 @@ function filterComparison(){
 function calculator(){
   var nMeat = (document.getElementById('sliderValue').value)*0.17;
   var subjectValor3 = document.getElementById('subjectDropdown3').value;
-  var you = {LOCATION:"You",Value:nMeat};
+  var you = {LOCATION:"YOU",Value:nMeat, NAME:"YOU"};
   d3.csv('dataMeat2.csv').then(function(dados) {
     var steakCalculator = dados
         .filter(d => d.MEASURE === "KG_CAP" && d.TIME === "2023" && d.SUBJECT === subjectValor3)
-        .map(d => ({ LOCATION: d.LOCATION, Value: parseFloat((d.Value)/52).toFixed(2)}))
+        .map(d => ({ NAME:d.name, LOCATION: d.LOCATION, Value: parseFloat((d.Value)/52).toFixed(2)}))
 
     steakCalculator.push(you)
     
-    steakCalculator.sort((a, b) => b.Value - a.Value)
+    steakCalculator.sort((b, a) => b.Value - a.Value)
     console.log(steakCalculator);
 
 
@@ -311,29 +300,42 @@ function calculator(){
           var myChart = echarts.init(chartDom);
           var option; 
           option = {
-            xAxis: {
+            yAxis: {
               type: 'category',
               data: steakCalculator.map(d => d.LOCATION)
             },
-            yAxis: {
+            xAxis: {
               type: 'value'
             },
-            series: [
-              {
-                data: steakCalculator.map(item => ({
-                  value: parseFloat(item.Value),
-                  itemStyle: {
-                    color: parseFloat(item.LOCATION) === 'You' ? '  #548caa ' : '#c3d9e5',
-                    borderRadius: [0, 25, 25, 0]
-                  }
-                })),
-                type: 'bar',
-                showBackground: true,
-                backgroundStyle: {
-                  color: 'rgba(180, 180, 180, 0.2)'
+            /*
+           series:[
+            {
+              data: steakCalculator.map(d => d.Value),
+              type: 'bar'
+            }
+           ]
+           */
+           tooltip: {
+            trigger: 'item',
+            formatter: function(params) {
+              var tooltipText = steakCalculator[params.dataIndex].NAME+ '<br/>'+ params.value + ' kg per capita' +'<br/>';
+              return tooltipText;
+            }
+          },
+           series: [
+            {
+              data: steakCalculator.map(item => ({
+                value: parseFloat(item.Value),
+                itemStyle: {
+                color: item.LOCATION === 'YOU' ? '#860000' : '#c3d9e5',
+                borderRadius: [0, 5, 5, 0],
                 }
-              }
-            ]
+              })),
+              type: 'bar',
+              barWidth: '50%'
+            },
+          ]   
+
           };
           option && myChart.setOption(option);
 
