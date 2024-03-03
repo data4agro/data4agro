@@ -29,8 +29,10 @@ label {
 }
 
 input[type="range"] {
-    width: 80%;
+    width: 50%;
     margin: 0 auto;
+    
+    
 }
 
 output {
@@ -38,3 +40,4 @@ output {
     margin-top: 10px;
     font-weight: bold;
 }
+
